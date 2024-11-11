@@ -1,7 +1,13 @@
 <ul>
     <% @media.each do |media| %>
         <li>
-            <p><%= media['title'] %></p>
+            <p>
+                <a href="/media/<%=media['id']%>"><%= media['title'] %></a>
+                <form action='/media/<%=media['id']%>/delete' method='post'>
+                    <input type='submit' value='delete'>
+                </form>
+            </p>
         </li>
     <%end%>
 </ul>
+<a href='/media/new' class="button-link">add media</a>
