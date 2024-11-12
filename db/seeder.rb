@@ -16,13 +16,16 @@ class Seeder
         db.execute('CREATE TABLE media (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     title TEXT NOT NULL,
-                    description TEXT)')
+                    description TEXT,
+                    poster TEXT,
+                    backdrop TEXT)')
     end
 
     def self.populate_tables
-        db.execute('INSERT INTO media (title, description) VALUES ("Alien", "After investigating a mysterious transmission of unknown origin, the crew of a commercial spacecraft encounters a deadly lifeform.")')
-        db.execute('INSERT INTO media (title, description) VALUES ("John Wick", "An assassin returns to his old job after his dog dies.")')
-        db.execute('INSERT INTO media (title, description) VALUES ("The Dark Knight", "Orphan fights a clown.")')
+        movies = JSON.parse(File.read('db/popular_movies.json'))
+        movies.each { |n| 
+        db.execute('INSERT INTO media (title, description, poster, backdrop) VALUES (?,?,?,?)', [n["title"], n["overview"], n["poster_path"], n["backdrop_path"]])
+        }
     end
 
     private
