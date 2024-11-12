@@ -18,13 +18,14 @@ class Seeder
                     title TEXT NOT NULL,
                     description TEXT,
                     poster TEXT,
-                    backdrop TEXT)')
+                    backdrop TEXT,
+                    rating FLOAT)')
     end
 
     def self.populate_tables
         movies = JSON.parse(File.read('db/popular_movies.json'))
         movies.each { |n| 
-        db.execute('INSERT INTO media (title, description, poster, backdrop) VALUES (?,?,?,?)', [n["title"], n["overview"], n["poster_path"], n["backdrop_path"]])
+        db.execute('INSERT INTO media (title, description, poster, backdrop, rating) VALUES (?,?,?,?,?)', [n["title"], n["overview"], n["poster_path"], n["backdrop_path"], n["vote_average"].to_f])
         }
     end
 
