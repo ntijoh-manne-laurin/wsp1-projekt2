@@ -18,6 +18,29 @@ header {
     background-color: azure;
 }
 
+header svg {
+    height: 100%;
+}
+
+.menu {
+    display: flex;
+    align-items: right;
+    justify-content: space-between;
+    height: 7vh;
+    width: 30vw;
+    left: -30vw;
+    margin-top: 10vh;
+    position: fixed;
+    top: 0;
+    z-index: 4;
+    transition: left 1s;
+    background-color: black;
+}
+
+.show-menu {
+    left: 0;
+}
+
 header h1 {
     margin: 0;
 }
@@ -63,6 +86,7 @@ a:visited {
     flex-direction: column;
     align-content: center;
     justify-content: space-between;
+    transition: transform 0.3s;
 }
 
 .card img {
@@ -75,6 +99,10 @@ a:visited {
     text-align: center;
 }
 
+.card:hover {
+    transform: translateY(-2vh);
+}
+
 .star {
     color: yellow;
 }
@@ -82,4 +110,21 @@ a:visited {
 .score {
     display: flex;
     align-items: center;
+}
+
+
+
+.show {
+    display: flex;
+    width: 100%;
+    height: 90vh;
+    box-sizing: border-box;
+    padding: 5vh 10%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.show img {
+    width: 40vw;
 }

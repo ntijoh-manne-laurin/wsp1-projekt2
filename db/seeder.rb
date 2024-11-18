@@ -10,6 +10,7 @@ class Seeder
 
     def self.drop_tables
         db.execute('DROP TABLE IF EXISTS media')
+        db.execute('DROP TABLE IF EXISTS users')
     end
 
     def self.create_tables
@@ -20,6 +21,11 @@ class Seeder
                     poster TEXT,
                     backdrop TEXT,
                     rating FLOAT)')
+                    
+        db.execute('CREATE TABLE users (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    username TEXT NOT NULL,
+                    password TEXT)')
     end
 
     def self.populate_tables
