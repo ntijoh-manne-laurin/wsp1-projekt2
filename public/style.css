@@ -176,3 +176,58 @@ a:visited {
 .show img {
     width: 40vw;
 }
+
+/* Grundläggande stil för stjärnorna */
+/* Formulär */
+.rating-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Stjärnklass och input */
+.stars {
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: row-reverse;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.stars input[type="radio"] {
+    display: none; /* Dölj input */
+}
+
+.star-icon {
+    width: 40px;
+    height: 40px;
+    fill: #ccc; /* Grundfärg för stjärnor */
+    cursor: pointer;
+    transition: fill 0.3s ease;
+}
+
+/* När en stjärna är vald */
+.stars input[type="radio"]:checked + .star .star-icon {
+    fill: gold; /* Fyll vald stjärna med guld */
+}
+
+/* Hover-effekt */
+.star:hover .star-icon{
+    fill: gold;
+}
+
+.star:hover ~ .star .star-icon {
+    fill: #ffd700; 
+    /* Markera stjärnor vid hover */
+}
+
+
+/* Fyll i tidigare stjärnor när en stjärna är vald */
+.stars input[type="radio"]:checked + .star ~ .star .star-icon {
+    fill: gold;
+}

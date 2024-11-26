@@ -50,6 +50,7 @@ class App < Sinatra::Base
   end
 
   get '/media/:id' do |id|
+    @user = db.execute('SELECT * FROM users WHERE id=?', session[:user_id]).first
     @media = db.execute('SELECT * FROM media WHERE id=?', id).first
     #todo: om media inte finns gör nåt (.nil?)
     erb(:"media/show")
@@ -102,7 +103,12 @@ class App < Sinatra::Base
   post '/rating/:id' do |id|
     p params
     user_id = session[:user_id]
-    db.execute('INSERT INTO ratings (user_id, media_id, score) VALUES (?,?,?)', [user_id, id, params['rating']])
+    rating = db.execute('SELECT * FROM ratings WHERE user_id=? AND media_id=?', [user_id, id]).first
+    if rating.nil?
+      db.execute('INSERT INTO ratings (user_id, media_id, score) VALUES (?,?,?)', [user_id, id, params['rating']])
+    else
+      db.execute('UPDATE ratings SET score=? WHERE user_id=? AND media_id=?', [params['rating'].to_i, user_id, id])
+    end
     redirect('/media')
   end
 
