@@ -3,3 +3,7 @@
     <h1><%= @media['title'] %></h1>
     <p><%= @media['description']%></p>
 </section>
+<form action='/rating/<%=@media["id"]%>' method='post'>
+    <label>1-10<input type='integer' name='rating'></label>
+    <input type='submit' value='save'>
+</form>

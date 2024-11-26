@@ -11,6 +11,7 @@ class Seeder
     def self.drop_tables
         db.execute('DROP TABLE IF EXISTS media')
         db.execute('DROP TABLE IF EXISTS users')
+        db.execute('DROP TABLE IF EXISTS ratings')
     end
 
     def self.create_tables
@@ -25,7 +26,12 @@ class Seeder
         db.execute('CREATE TABLE users (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     username TEXT NOT NULL,
-                    password TEXT)')
+                    password TEXT NOT NULL)')
+
+        db.execute('CREATE TABLE ratings (
+                    user_id INTEGER NOT NULL,
+                    media_id INTEGER NOT NULL,
+                    score INTEGER)')
     end
 
     def self.populate_tables
@@ -33,12 +39,15 @@ class Seeder
         movies.each { |n| 
         db.execute('INSERT INTO media (title, description, poster, backdrop, rating) VALUES (?,?,?,?,?)', [n["title"], n["overview"], n["poster_path"], n["backdrop_path"], n["vote_average"].to_f])
         }
+
+        password_hashed = BCrypt::Password.create("banan")
+        db.execute('INSERT INTO users (username, password) VALUES (?,?)',["Manne", password_hashed])
     end
 
     private
     def self.db
         return @db if @db
-        @db = SQLite3::Database.new('db/media.sqlite')
+        @db = SQLite3::Database.new('db/data.sqlite')
         @db.results_as_hash = true
         @db
     end
