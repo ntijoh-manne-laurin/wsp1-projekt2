@@ -1,4 +1,4 @@
-let menubutton = document.querySelector(".menu-button")
+let menubutton = document.querySelectorAll(".menu-button")
 let menu = document.querySelector(".menu")
 
 function show(){

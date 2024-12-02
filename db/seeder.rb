@@ -3,9 +3,9 @@ require 'sqlite3'
 class Seeder
 
     def self.seed!
-        drop_tables
-        create_tables
-        populate_tables
+      #  drop_tables
+      #  create_tables
+      #  populate_tables
     end
 
     def self.drop_tables
@@ -21,7 +21,8 @@ class Seeder
                     description TEXT,
                     poster TEXT,
                     backdrop TEXT,
-                    rating FLOAT)')
+                    rating FLOAT,
+                    vote_count INTEGER)')
                     
         db.execute('CREATE TABLE users (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -37,7 +38,7 @@ class Seeder
     def self.populate_tables
         movies = JSON.parse(File.read('db/popular_movies.json'))
         movies.each { |n| 
-        db.execute('INSERT INTO media (title, description, poster, backdrop, rating) VALUES (?,?,?,?,?)', [n["title"], n["overview"], n["poster_path"], n["backdrop_path"], n["vote_average"].to_f])
+        db.execute('INSERT INTO media (title, description, poster, backdrop, rating, vote_count) VALUES (?,?,?,?,?,?)', [n["title"], n["overview"], n["poster_path"], n["backdrop_path"], n["vote_average"].to_f, n["vote_count"]])
         }
 
         password_hashed = BCrypt::Password.create("banan")
