@@ -34,19 +34,25 @@ class App < Sinatra::Base
     erb(:"index")
   end
 
-  post '/media' do
-    p params
-    db.execute('INSERT INTO media (title, description) VALUES (?,?)', [params['title'], params['description']])
-    redirect('/media')
-  end
-
+  
   post '/media/:id/delete' do |id|
     db.execute('DELETE FROM media WHERE id=?', id)
     redirect('/media')
   end
-
+  
   get '/media/new' do 
     erb(:"media/new")
+  end
+  
+  post '/media/new' do
+    # p params
+    media_id = db.execute('INSERT INTO media (title, description, backdrop, rating, vote_count) VALUES (?,?,?,?,?) RETURNING id', [params['title'], params['description'], params['backdrop'], params['rating'].to_i, 1]).first['id']
+    #media_id = db.execute('SELECT id FROM media WHERE title=?', params['title']).first[:id]
+    p session[:user_id]
+    p media_id
+    p params['rating'].to_i
+    db.execute('INSERT INTO ratings (user_id, media_id, score) VALUES (?,?,?)', [session[:user_id], media_id.to_i, params['rating'].to_i])
+    redirect('/media')
   end
 
   get '/media/user_ratings' do 
@@ -112,14 +118,23 @@ class App < Sinatra::Base
     end
   end
 
+  get '/logout' do
+    session.clear 
+    redirect('/media')
+  end
+
   post '/rating/:id' do |id|
     p params
     user_id = session[:user_id]
+    #Hämta det nuvarande betyget som användaren har gett denna media
     rating = db.execute('SELECT * FROM ratings WHERE user_id=? AND media_id=?', [user_id, id]).first
+    #Hämta antalet röster och snittligt resultat för denna media
     vote_average = db.execute('SELECT rating FROM media WHERE id=?', [id]).first['rating']
     vote_count = db.execute('SELECT vote_count FROM media WHERE id=?', [id]).first['vote_count']
     p vote_average
     p vote_count
+    # Om det är första gången användaren ger denna media en rating, öka i så fall antalet röster och 
+    # beräkna det nya betyget, annars beräkna bara det nya betyget och uppdatera det sedan.
     if rating.nil?
       new_rating = (vote_average * vote_count + params['rating'].to_i)/(vote_count + 1)
       db.execute('INSERT INTO ratings (user_id, media_id, score) VALUES (?,?,?)', [user_id, id, params['rating'].to_i])

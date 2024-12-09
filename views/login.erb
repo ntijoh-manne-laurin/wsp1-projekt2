@@ -1,8 +1,8 @@
-<form action='/login' method='post'>
-    <label>Name<input type='text' name='username'></label>
-    <label>Password<input type='text' name='password'></label>
+<form class='form-container' action='/login' method='post'>
+    <label>Name<input type='text' name='username' autocomplete='off'></label>
+    <label>Password<input type='password' name='password'></label>
     <input type='submit' value='save'>
+    <a href="/register">
+        Don't have an account? register here!
+    </a>
 </form>
-<p>
-    Don't have an account? register <a href="/register">here!</a>
-</p>

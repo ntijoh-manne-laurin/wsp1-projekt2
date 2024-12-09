@@ -1,140 +1,136 @@
+
+/* Globala standarder */
 * {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  font-family: sans-serif;
-  color: #666;
-  background-color: #f1f1f1;
-  font-size: x-large;
+    font-family: Arial, sans-serif;
+    color: white;
+    background-color: black;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
 }
 
-header {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    height: 10vh;
-    background-color: azure;
-    position: fixed;
-    z-index: 4;
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
 }
 
-header svg {
-    height: 100%;
+a:hover {
     color: orangered;
 }
 
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    width: 100%;
+    height: 10vh;
+    background-color: orangered;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    z-index: 10;
+}
+
+header h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+}
+
+#menu-button {
+    line-height: 0;
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 3rem;
+    cursor: pointer;
+}
+
+/* Utrymme för fixerat sidhuvud */
 #space {
     height: 10vh;
     width: 100%;
 }
 
-/* Menycontainer */
+/* Navigation */
 .menu {
     display: flex;
-    flex-direction: column; /* Stapla elementen vertikalt */
-    align-items: center; /* Justera innehåll till vänster */
-    justify-content: flex-start; /* Börja från toppen */
-    padding: 2rem; /*Ge lite utrymme runtom */
-    height: 90vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
     width: 30vw;
-    left: -100%; /* Flytta helt utanför skärmen */
-    margin-top: 10vh;
     position: fixed;
-    top: 0;
-    z-index: 4;
-    transition: left 1s; /* Smooth fly-in effekt */
-    background-color: black;
-    color: white; /* Textfärg */
-    overflow: hidden; /* För säkerhets skull */
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5); /* Skugga för visuell effekt */
+    top: 10vh;
+    left: -100%;
+    background-color: #222;
+    color: white;
+    padding: 2rem;
+    z-index: 10;
+    transition: left 0.5s ease;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
 }
 
-/* När menyn visas */
 .show-menu {
-    left: 0; /* Flytta in till vänstra kanten av skärmen */
+    left: 0;
 }
 
-/* Användarnamn-styling */
 .menu .user-info {
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: bold;
-    margin-bottom: 2rem; /* Ge avstånd till länkarna */
+    margin-bottom: 2rem;
     text-transform: capitalize;
-    width: 100%; /* Täcker hela bredden */
-    text-align: left; /* Justerat till vänster */
-    border-bottom: 1px solid white; /* Separationslinje */
+    width: 100%;
+    text-align: left;
+    border-bottom: 1px solid white;
     padding-bottom: 1rem;
 }
 
-/* Länkar */
 .menu a {
     color: white;
-    text-decoration: none;
-    font-size: 1rem;
-    margin-bottom: 1rem;
-    padding: 0.5rem 1rem; /* Padding: behåll utrymme runt texten */
-    background-color: #333;
+    background-color: orangered;
+    padding: 0.8rem 1.5rem;
     border-radius: 5px;
-    display: block; /* Gör länken blocknivå */
-    width: calc(100% - 2rem); /* Sträck länken över hela menyns bredd */
-    text-align: center; /* Centrerad text */
+    margin-bottom: 1rem;
+    width: 100%;
+    text-align: center;
+    font-size: 1rem;
     transition: background-color 0.3s ease;
 }
 
 .menu a:hover {
-    background-color: #555;
+    background-color: #e65c00;
 }
 
-
-
-header h1 {
-    margin: 0;
-}
-
-a {
-    text-decoration: none;
-    color: black;
-}
-
-a:visited {
-    color: black;
-}
-
-.button-link {
-    border-radius: 5px;
-    background-color: orangered;
-    height: 10vh;
-}
-
-
+/* Kortlayout */
 .card-wrapper {
     display: flex;
     flex-wrap: wrap;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 5vh 5%;
-    gap: 6vh 7%;
     justify-content: center;
+    gap: 2rem;
+    padding: 2rem;
 }
 
 .card {
     display: flex;
-    width: 15%;
-    height: 45vh;
-    flex-wrap: wrap;
-    box-sizing: border-box;
-    border: solid;
-    border-color: #666;
-    border-width: 2px;
-    border-radius: 3vh;
-    margin: 0;
-    overflow: hidden;
-
     flex-direction: column;
-    align-content: center;
-    justify-content: space-between;
+    align-items: center;
+    width: 250px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s;
+    background-color: #252525;
 }
 
 .card img {
@@ -142,40 +138,36 @@ a:visited {
     height: auto;
 }
 
-.card * {
-    display: flex;
-    justify-content: center;
+.card h4, .card p {
+    padding: 1rem;
     text-align: center;
 }
 
 .card:hover {
-    transform: translateY(-2vh);
-}
-
-.star {
-    color: yellow;
+    transform: translateY(-5px);
 }
 
 .score {
-    display: flex;
-    align-items: center;
+    text-align: center;
 }
 
-
-
+/* Show-sida */
 .show {
     display: flex;
-    width: 100%;
-    height: 90vh;
-    box-sizing: border-box;
-    padding: 5vh 10%;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    text-align: center;
+    padding: 2rem;
 }
 
 .show img {
-    width: 40vw;
+    width: 50%;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.show-info {
+    width: 60vw;
 }
 
 /* Grundläggande stil för stjärnorna */
@@ -232,3 +224,136 @@ a:visited {
 .stars input[type="radio"]:checked + .star ~ .star .star-icon {
     fill: gold;
 }
+
+/* Form Container */
+.form-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 10vh auto;
+    padding: 2rem;
+    background-color: #1f1f1f;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    color: #d1d1d1;
+    text-align: center;
+}
+
+.form-container h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #fff;
+}
+
+/* Form Fields */
+.form-container label {
+    display: block;
+    text-align: left;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: #bbb;
+}
+
+.form-container input[type="text"], 
+.form-container input[type="password"], 
+.form-container input[type="email"], 
+.form-container input[type="number"], 
+.form-container input[type="url"], 
+.form-container textarea, 
+.form-container select {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1.2rem;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+/* Focus and Hover Effects */
+.form-container input:focus, 
+.form-container textarea:focus, 
+.form-container select:focus {
+    outline: none;
+    border-color: #ffd700;
+}
+
+/* Submit Button */
+.form-container input[type="submit"], 
+.form-container button {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    background-color: #d35400;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-container input[type="submit"]:hover, 
+.form-container button:hover {
+    background-color: #e67e22;
+}
+
+/* Form Links */
+.form-container a {
+    display: block;
+    margin-top: 1rem;
+    color: #ffd700;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.form-container a:hover {
+    text-decoration: underline;
+}
+
+/* Textarea Resizing Restriction */
+.form-container textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Custom Select Styling */
+.form-container select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+
+
+/* Responsiv design */
+@media (max-width: 768px) {
+    header {
+        padding: 0 1rem;
+    }
+
+    .menu {
+        width: 80%;
+    }
+
+    .card {
+        width: 90%;
+    }
+
+    .show img {
+        width: 80%;
+    }
+
+    .rating-form {
+        width: 90%;
+    }
+
+    .form-container {
+        width: 90%;
+        padding: 1.5rem;
+    }
+}
+
+
+

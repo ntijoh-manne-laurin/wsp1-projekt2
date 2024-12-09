@@ -1,7 +1,7 @@
 <section class='card-wrapper'>
     <% @media.each do |media| %>
         <a href="/media/<%=media['id']%>" class='card'>
-            <img src='https://image.tmdb.org/t/p/w500/<%=media["backdrop"]%>'>
+            <img src='<%=media["backdrop"]%>'>
             <h4>
                 <%= media['title'] %>
             </h4>
