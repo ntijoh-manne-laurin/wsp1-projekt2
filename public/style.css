@@ -46,14 +46,129 @@ header h1 {
     color: white;
 }
 
-#menu-button {
-    line-height: 0;
-    border: none;
-    background: transparent;
-    color: white;
-    font-size: 3rem;
+header a:hover {
+    color: black;
+}
+
+.menu-button {
+    width: 10%;
+    height: 10vh;
+    z-index: 11;
     cursor: pointer;
 }
+
+.burger {
+    margin: 10px 30%;
+    background-color: #ffffff;
+    height: 4px;
+    width: 40%;
+    border-radius: 1vw;
+}
+
+.animation-one {
+    animation: first 0.75s forwards;
+}
+
+.reverse-one {
+    animation: reverse-first 0.75s forwards;
+}
+
+.animation-two {
+    animation: second 0.75s forwards;
+}
+
+.reverse-two {
+    animation: reverse-second 0.75s forwards;
+}
+
+.animation-3 {
+    animation: third 0.75s forwards;
+}
+
+.reverse-3 {
+    animation: reverse-third 0.75s forwards;
+}
+
+@keyframes first {
+    0% {
+        transform: translateY(0)
+    }
+
+    50% {
+        transform: translateY(14px)
+    }
+
+    100% {
+        transform: translateY(14px) rotate(45deg);
+    }
+}
+
+@keyframes reverse-first {
+    0% {
+        transform: translateY(14px) rotate(45deg);
+    }
+
+    50% {
+        transform: translateY(14px)
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes second {
+    0% {}
+
+    50% {
+        transform: rotate(0)
+    }
+
+    100% {
+        transform: rotate(-45deg);
+    }
+}
+
+@keyframes reverse-second {
+    0% {
+        transform: rotate(-45deg)
+    }
+
+    50% {
+        transform: rotate(0)
+    }
+
+    100% {}
+}
+
+@keyframes third {
+    0% {
+        transform: translateY(0)
+    }
+
+    50% {
+        transform: translateY(-14px)
+    }
+
+    100% {
+        transform: translateY(-14px) rotate(45deg);
+    }
+}
+
+@keyframes reverse-third {
+    0% {
+        transform: translateY(-14px) rotate(45deg);
+    }
+
+    50% {
+        transform: translateY(-14px)
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
 
 /* Utrymme för fixerat sidhuvud */
 #space {
@@ -104,11 +219,14 @@ header h1 {
     width: 100%;
     text-align: center;
     font-size: 1rem;
-    transition: background-color 0.3s ease;
+    font-weight: bold;
+    transition: border-radius 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
 .menu a:hover {
-    background-color: #e65c00;
+    background-color: #000000;
+    color: orangered;
+    border-radius: 8px;
 }
 
 /* Kortlayout */
@@ -120,12 +238,20 @@ header h1 {
     padding: 2rem;
 }
 
+.card-wrapper div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 20vw;
+}
+
 .card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 250px;
-    border: 1px solid #ddd;
+    width: 18vw;
+    border: 1.5px solid #ddd;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -145,10 +271,12 @@ header h1 {
 
 .card:hover {
     transform: translateY(-5px);
+    border-color: orangered;
 }
 
 .score {
     text-align: center;
+    flex-direction: column;
 }
 
 /* Show-sida */
@@ -170,6 +298,31 @@ header h1 {
     width: 60vw;
 }
 
+/* För user_rated sidan */
+
+.media-button * {
+    width: 100%;
+    padding: 0.4rem;
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    background-color: orangered;
+    border: black solid 2px;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: none;
+    z-index: 3;
+    transition: border-radius 0.5s ease, background-color 0.5s ease, color 0.5s ease, border-color 0.3s ease;
+}
+
+.media-button *:hover {
+    background-color: #000000;
+    color: orangered;
+    border-radius: 8px;
+    border-color: orangered;
+}
+
 /* Grundläggande stil för stjärnorna */
 /* Formulär */
 .rating-form {
@@ -177,8 +330,8 @@ header h1 {
     flex-direction: column;
     align-items: center;
     margin-top: 2rem;
-    background-color: #fff;
-    padding: 1.5rem;
+    background-color: #000000;
+    padding: 1.5rem 25%;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -280,30 +433,38 @@ header h1 {
 }
 
 /* Submit Button */
+.submit-button,
 .form-container input[type="submit"], 
 .form-container button {
     width: 100%;
     padding: 0.8rem;
     font-size: 1rem;
-    background-color: #d35400;
-    border: none;
+    background-color: orangered;
+    border: solid 2px transparent ;
     border-radius: 5px;
     color: white;
     font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: border-radius 0.3s ease, background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+    box-sizing: border-box;
 }
 
+
+
+.submit-button:hover,
 .form-container input[type="submit"]:hover, 
 .form-container button:hover {
-    background-color: #e67e22;
+    background-color: #000000;
+    color: orangered;   
+    border-radius: 8px;
+    border: solid 2px orangered;
 }
 
 /* Form Links */
 .form-container a {
     display: block;
     margin-top: 1rem;
-    color: #ffd700;
+    color: orangered;
     text-decoration: none;
     font-size: 0.9rem;
 }

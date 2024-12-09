@@ -11,9 +11,14 @@
 <body class="dark">
     <header>
         <h1><a href="/">ScreenVault</a></h1>
-        <button id="menu-button" class="icon">
+        <%# <button id="menu-button" class="icon">
             menu
-        </button>
+        </button> %>
+        <div class="menu-button">
+            <div class="burger reverse-one" id="burger-one"></div>
+            <div class="burger reverse-two" id="burger-two"></div>
+            <div class="burger reverse-3" id="burger-three"></div>
+        </div>
 
     </header>
     <nav class='menu'>
@@ -21,7 +26,8 @@
             <p class="user-info">Welcome, <%= @user['username'] %>!</p>
             <a href='/media/new' class="button-link">Add Media</a>
             <a href='/media/user_ratings' class="button-link">My ratings</a>
-            <a href='/logout' class="button-link">Logout</a>
+            <a href='/media/user_media' class="button-link">My media</a>
+            <a href='/logout' class="button-link">Log out</a>
         <% else %>
             <a href='/login' class="button-link">Login</a>
             <a href='/register' class="button-link">Register</a>

@@ -12,6 +12,7 @@ class Seeder
         db.execute('DROP TABLE IF EXISTS media')
         db.execute('DROP TABLE IF EXISTS users')
         db.execute('DROP TABLE IF EXISTS ratings')
+        db.execute('DROP TABLE IF EXISTS added_media')
     end
 
     def self.create_tables
@@ -33,6 +34,10 @@ class Seeder
                     user_id INTEGER NOT NULL,
                     media_id INTEGER NOT NULL,
                     score INTEGER)')
+
+        db.execute('CREATE TABLE added_media (
+                    user_id INTEGER NOT NULL,
+                    media_id INTEGER NOT NULL)')
     end
 
     def self.populate_tables
