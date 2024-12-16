@@ -1,7 +1,7 @@
 <form class='form-container' action='/media/edit/<%=@media['id']%>' method='post'>
-    <label>Title<input type='text' name='title' autocomplete='off' placeholder='<%=@media['title']%>'></label>
-    <label>Description<input type='text' name='description' autocomplete='off' placeholder='<%=@media['description']%>'></label>
-    <label>Backdrop url<input type='url' name='backdrop' autocomplete='off' placeholder='<%=@media['backdrop']%>'></label>
+    <label>Title<input type='text' name='title' autocomplete='off' value='<%=@media['title']%>'></label>
+    <label>Description<input type='text' name='description' autocomplete='off' value='<%=@media['description']%>'></label>
+    <label>Backdrop url<input type='url' name='backdrop' autocomplete='off' value='<%=@media['backdrop']%>'></label>
     <label>
         <span>Rate this:</span>
         <div class="stars">

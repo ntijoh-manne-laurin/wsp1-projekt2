@@ -1,3 +1,6 @@
+<section id='search-wrapper'>
+    <input type='text' onkeyup='searchFilter()' id='search-bar' placeholder='Search...'>
+</section>
 <section class='card-wrapper'>
     <% @media.each do |media| %>
         <a href="/media/<%=media['id']%>" class='card'>

@@ -12,6 +12,10 @@ class App < Sinatra::Base
 		return @db
 	end
 
+  before do 
+    @user = db.execute('SELECT * FROM users WHERE id=?', session[:user_id]).first
+  end
+
   configure do
     enable :sessions
     set :session_secret, SecureRandom.hex(64)
@@ -22,9 +26,6 @@ class App < Sinatra::Base
   end
 
   get '/media' do
-    user_id = session[:user_id]
-    p user_id
-    @user = db.execute('SELECT * FROM users WHERE id=?', user_id).first
     if @user.nil?
       # redirect('/login')
       p "inte inloggad"
@@ -36,12 +37,10 @@ class App < Sinatra::Base
 
   
   post '/media/delete/:id' do |id|
-    user_id = session[:user_id]
-    correct_user = !db.execute('SELECT * FROM added_media WHERE user_id=? AND media_id=?', [user_id, id]).first.nil?
+    correct_user = !db.execute('SELECT * FROM media WHERE owner_id=? AND id=?', [@user['id'], id]).first.nil?
     if correct_user
       db.execute('DELETE FROM media WHERE id=?', id)
       db.execute('DELETE FROM ratings WHERE media_id=?', id)
-      db.execute('DELETE FROM added_media WHERE media_id=?', id)
       redirect('/media')
     else #inte rätt användare
       #säg åt användaren att hen inte får ta bort denna media
@@ -55,28 +54,28 @@ class App < Sinatra::Base
   
   post '/media/new' do
     # p params
-    media_id = db.execute('INSERT INTO media (title, description, backdrop, rating, vote_count) VALUES (?,?,?,?,?) RETURNING id', [params['title'], params['description'], params['backdrop'], params['rating'].to_i, 1]).first['id']
+    media_id = db.execute('INSERT INTO media (title, description, backdrop, rating, vote_count, owner_id) VALUES (?,?,?,?,?,?) RETURNING id', [params['title'], params['description'], params['backdrop'], params['rating'].to_i, 1, @user['id']]).first['id']
     #media_id = db.execute('SELECT id FROM media WHERE title=?', params['title']).first[:id]
-    p session[:user_id]
+    p @user['id']
     p media_id
     p params['rating'].to_i
-    db.execute('INSERT INTO ratings (user_id, media_id, score) VALUES (?,?,?)', [session[:user_id], media_id.to_i, params['rating'].to_i])
-    db.execute('INSERT INTO added_media (user_id, media_id) VALUES (?,?)', [session[:user_id], media_id.to_i])
+    db.execute('INSERT INTO ratings (user_id, media_id, score) VALUES (?,?,?)', [@user['id'], media_id.to_i, params['rating'].to_i])
+    # db.execute('INSERT INTO added_media (user_id, media_id) VALUES (?,?)', [session[:user_id], media_id.to_i])
     redirect('/media')
   end
 
   post '/media/edit/:id' do |id|
     p params
-    user_id = session[:user_id]
     #Hämta det nuvarande betyget som användaren har gett denna media
-    rating = db.execute('SELECT * FROM ratings WHERE user_id=? AND media_id=?', [user_id, id]).first
+    rating = db.execute('SELECT * FROM ratings WHERE user_id=? AND media_id=?', [@user['id'], id]).first
     #Hämta antalet röster och snittligt resultat för denna media
     vote_average = db.execute('SELECT rating FROM media WHERE id=?', [id]).first['rating']
     vote_count = db.execute('SELECT vote_count FROM media WHERE id=?', [id]).first['vote_count']
 
     new_rating = (vote_average*(vote_count-1) + params['rating'].to_i)/(vote_count)
-    db.execute('UPDATE ratings SET score=? WHERE user_id=? AND media_id=?', [params['rating'].to_i, user_id, id])
+    db.execute('UPDATE ratings SET score=? WHERE user_id=? AND media_id=?', [params['rating'].to_i, @user['id'], id])
     db.execute('UPDATE media SET title=?, description=?, backdrop=?, rating=? WHERE id=?', [params['title'], params['description'], params['backdrop'], new_rating, id])
+    redirect('/media/'+id)
   end
 
   get '/media/edit/:id' do |id|
@@ -86,8 +85,6 @@ class App < Sinatra::Base
   end
 
   get '/media/user_ratings' do 
-    @user = db.execute('SELECT * FROM users WHERE id=?', session[:user_id]).first
-    p @user
     @media = db.execute('SELECT *   
                         FROM media 
                         INNER JOIN ratings 
@@ -97,18 +94,11 @@ class App < Sinatra::Base
   end
 
   get '/media/user_media' do
-    @user = db.execute('SELECT * FROM users WHERE id=?', session[:user_id]).first
-    p @user
-    @media = db.execute('SELECT *   
-                        FROM media 
-                        INNER JOIN added_media 
-                          ON media.id = added_media.media_id
-                        WHERE added_media.user_id=?', [@user['id']])
+    @media = db.execute('SELECT * FROM media WHERE media.owner_id=?', [@user['id']])
     erb(:"media/user_media")
   end
   
   get '/media/:id' do |id|
-    @user = db.execute('SELECT * FROM users WHERE id=?', session[:user_id]).first
     @media = db.execute('SELECT * FROM media WHERE id=?', id).first
     p @media
     @rating = db.execute('SELECT * FROM ratings WHERE media_id=? AND user_id=?', [@media['id'], @user['id']]).first

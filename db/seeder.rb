@@ -19,11 +19,12 @@ class Seeder
         db.execute('CREATE TABLE media (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     title TEXT NOT NULL,
-                    description TEXT,
+                    description TEXT NOT NULL,
                     poster TEXT,
-                    backdrop TEXT,
-                    rating FLOAT,
-                    vote_count INTEGER)')
+                    backdrop TEXT NOT NULL,
+                    rating FLOAT NOT NULL,
+                    vote_count INTEGER NOT NULL,
+                    owner_id INTEGER)')
                     
         db.execute('CREATE TABLE users (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -33,11 +34,7 @@ class Seeder
         db.execute('CREATE TABLE ratings (
                     user_id INTEGER NOT NULL,
                     media_id INTEGER NOT NULL,
-                    score INTEGER)')
-
-        db.execute('CREATE TABLE added_media (
-                    user_id INTEGER NOT NULL,
-                    media_id INTEGER NOT NULL)')
+                    score INTEGER NOT NULL)')
     end
 
     def self.populate_tables
